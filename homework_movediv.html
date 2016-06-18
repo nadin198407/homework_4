@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Move_div</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	  div{
+	  	height: 100px;
+	  	width: 100px;
+	  	background-color: yellow;
+	  	border-radius: 10px;
+	  	margin-bottom: 15px;
+	  	position: relative;
+	  }
+	</style>
+
+</head>
+<body>
+	<div id="moving"></div>
+	<input type="submit" id="stop" name="click" value="move div"/>
+	<script type="text/javascript">
+
+
+		var leftPosition = 0;
+		var movingDiv;
+		window.addEventListener("load", function()
+
+		{
+			var moveInterval = null;
+			var movingDiv = document.getElementById("moving");
+			var stopMoving = document.getElementById("stop");
+			var windowWidth = document.body.clientWidth;
+
+			movingDiv.addEventListener("click", moveNow);
+
+
+			function moveNow(e){
+				moveInterval = setInterval( function () {
+					movingDiv.style.left = leftPosition + "px";
+					leftPosition += 1;
+					var widthDiv = windowWidth - movingDiv.clientWidth;
+					if (leftPosition === widthDiv){
+						leftPosition = 0;
+					}
+
+				}, 10);
+			};
+
+			stopMoving.addEventListener("click", function(){
+				clearInterval(moveInterval);
+			});
+
+		});
+	</script>
+</body>
+</html>

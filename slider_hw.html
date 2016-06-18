@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slider_homework</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div{
+			width: 200px;
+			height: 200px;
+			overflow: hidden;
+		}
+		ul{
+			padding: 0;
+			margin: 0;
+			list-style: 0;
+		}
+		li{
+			width: 200px;
+			height: 200px;
+			float: left;
+		}
+		.one{
+			background-color: pink;
+		}
+		.two{
+			background-color: yellow;
+		}
+		.three{
+			background-color: blue;
+		}
+		span{
+			padding: 5px;
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul>
+			<li class="one"></li>
+			<li class="two"></li>	
+			<li class="three"></li>		
+		</ul>
+	</div>
+	<div class="switcher">
+		<span data-derection="prev">prev</span>
+		<span data-derection="next">next</span>
+	</div>
+	<script type="text/javascript">
+		(function (){
+			var list = document.querySelector('ul');
+			var controls = document.querySelector('.switcher');
+			var count = list.children.length;
+			var width = parseInt(window.getComputedStyle(list.firstElementChild).getPropertyValue('width'));
+			
+			countWidth();//просто вызываем функцию 
+			
+			controls.addEventListener("click", clickHandler)
+
+			function countWidth(left){
+				var left = left ? left : 0;// если есть такой параметр лефт, то в лефт прописываем лефт, если нет - то 0
+				list.style.cssText = "width:" + (count + 1) * width + "px; left:" +(left)+ "px";
+			}
+
+			
+
+			function clickHandler(){
+				var target = event.target;
+				var attr = target.getAttribute("data-derection");
+
+				if (attr && attr == "next") {
+					var cloningElement = list.firstElementChild;
+					clonedElement = cloningElement.cloneNode(true);
+					countWidth('-200');
+					list.appendChild(clonedElement);
+				}
+				else if (attr && attr == "prev"){
+					var cloningElement = list.lastElementChild;
+					clonedElement = cloningElement.cloneNode(true);
+					countWidth('-200');
+					list.insertBefore(clonedElement, list.firstElementChild);
+					
+					
+				}
+				else {
+					return;
+				}
+				list.removeChild(cloningElement);
+				countWidth();
+			}
+		}());
+	</script>
+</body>
+</html>
